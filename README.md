@@ -1,2 +1,2 @@
-This is my first app using React.
-I have used Hooks in this.
+This is my first app using React. \
+I have applied the concept of Hooks in this.
