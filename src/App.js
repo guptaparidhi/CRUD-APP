@@ -1,68 +1,70 @@
 import React, { useState } from 'react'
-import UserTable from './tables/UserTable'
-import AddUserForm from './forms/AddUserForm'
-import EditUserForm from './forms/EditUserForm'
+import TaskTable from './tables/TaskTable'
+import AddTaskForm from './forms/AddTaskForm'
+import EditTaskForm from './forms/EditTaskForm'
 
 const App = () => {
 
-  const usersData = [
-    { id: 1, name: 'Tania', username: 'floppydiskette' },
-    { id: 2, name: 'Craig', username: 'siliconeidolon' },
-    { id: 3, name: 'Ben', username: 'benisphere' },
+  const tasksData = [
+    { id: 1, taskname: 'Get Up' },
+    { id: 2, taskname: 'Brush teeth and Bathe' },
+    { id: 3, taskname: 'Breakfast' },
   ]
 
-  const [users, setUsers] = useState(usersData)
+  const [tasks, setTasks] = useState(tasksData)
 
   const [editing, setEditing] = useState(false)
 
-  const [currentUser, setCurrentUser] = useState(false)
+  const [currentTask, setCurrentTask] = useState(false)
 
-  const addUser = (user) => {
-    user.id = users.length + 1
-    setUsers([...users, user])
+  const addTask = (task) => {
+    task.id = tasks.length + 1
+    setTasks([...tasks, task])
   }
 
-  const editRow = (user) => {
+  const editRow = (task) => {
     setEditing(true)
   
-    setCurrentUser({ id: user.id, name: user.name, username: user.username })
+    setCurrentTask({ id: task.id, taskname: task.taskname })
   }
 
-  const updateUser = (id, updatedUser) => {
+  const updateTask = (id, updatedTask) => {
     setEditing(false)
   
-    setUsers(users.map((user) => (user.id === id ? updatedUser : user)))
+    setTasks(tasks.map((task) => (task.id === id ? updatedTask : task)))
   }
 
-  const deleteUser = (id) => {
+  const deleteTask = (id) => {
     setEditing(false)
-    setUsers(users.filter((user) => user.id !== id))
+    setTasks(tasks.filter((task) => task.id !== id))
   }
 
   return (
     <div className="container">
-      <h1>CRUD App with Hooks</h1>
+      <h1>TODO APP</h1>
       <div className="flex-row">
       <div className="flex-large">
       {editing ? (
             <div>
-              <h2>Edit user</h2>
-              <EditUserForm
+              <h2>Edit Task</h2>
+              <EditTaskForm
                 setEditing={setEditing}
-                currentUser={currentUser}
-                updateUser={updateUser}
+                currentTask={currentTask}
+                updateTask={updateTask}
               />
             </div>
           ) : (
             <div>
-              <h2>Add user</h2>
-              <AddUserForm addUser={addUser} />
+              <h2>Add task</h2>
+              <AddTaskForm addTask={addTask} />
             </div>
+        
           )}
         </div>
+        
         <div className="flex-large">
-          <h2>View users</h2>
-          <UserTable users={users} editRow={editRow} deleteUser={deleteUser} />
+          <h2>View tasks</h2>
+          <TaskTable tasks={tasks} deleteTask={deleteTask} editRow={editRow}/>
         </div>
       </div>
     </div>
